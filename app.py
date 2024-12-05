@@ -69,7 +69,6 @@ if slope is not None:
 
 
                 fig, data = auswertung_1.zeitverlauf(temp_dir, slope)
-                fig = functions.customize_plot(fig)
                 data = data.sort_values(by='time')
                 st.dataframe(data)
                 st.plotly_chart(fig, use_container_width=True, theme=None)
