@@ -54,7 +54,7 @@ def customize_plot_t(fig, x_max, y_max, x_min=0, y_min=0, round_lim=True, log_ax
     return fig
 
 
-def customize_plot(fig, x_max=None, y_max=None, x_min=None, y_min=None, round_lim=True, log_axis=False, ticks='time', font_size=28):
+def customize_plot(fig, x_max=None, y_max=None, x_min=0 y_min=0, round_lim=True, log_axis=False, ticks='time', font_size=28):
 
     if ticks == 'time':
         x_minor = dict(showgrid=True, ticks="outside", tick0=5, dtick=5)
