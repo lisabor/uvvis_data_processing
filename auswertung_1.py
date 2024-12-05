@@ -146,7 +146,11 @@ def zeitverlauf(experiment, slope, times = [0,5,10,15,20,30,40,60], cut_off=500,
 
     df['concentration'] = df['concentration'] * dilution
 
-    df['time'] = df['filename'].str.extract(r'_(-?\d+)').astype(float)
+    # df['time'] = df['filename'].str.extract(r'_(-?\d+)').astype(float)
+    time_after_underscore = df['filename'].str.extract(r'_(\-?\d+)')[0]
+    time_before_min = df['filename'].str.extract(r'(\-?\d+)min')[0]
+    df['time'] = time_after_underscore.fillna(time_before_min).astype(float)
+
     df = umsatz(df)
 
     df = df.sort_values(by='time')
