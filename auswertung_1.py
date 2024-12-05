@@ -433,7 +433,7 @@ def integrale_methode(data, fig_int, color, name, x_max=30):
     return k
 
 
-def plot_reihe(reihe, x_legend=0.8, y_legend=0.9, max_nm=False):
+def plot_reihe(reihe, slope, x_legend=0.8, y_legend=0.9, max_nm=False):
     fig = go.Figure()
     fig_umsatz = go.Figure()
     fig_int = go.Figure()
