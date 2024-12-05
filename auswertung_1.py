@@ -170,7 +170,7 @@ def zeitverlauf(experiment, slope, times = [0,5,10,15,20,30,40,60], cut_off=500,
         font=dict(size=20),
         ),
     fig = functions.customize_plot(fig, max(df['time']), max(df['concentration']), font_size=font_size)
-    fig.show()
+    # fig.show()
     return fig, df
 
 
