@@ -64,7 +64,7 @@ if slope is not None:
             fig = functions.customize_plot(fig)
             data = data.sort_values(by='time')
             st.dataframe(data)
-            st.plotly_chart(fig)
+            st.plotly_chart(fig, use_container_width=True, theme=None)
             #auswertung_1.plot_allinone(fig, experiment, slope, title, times=[0], cut_off=500, name=None, color=None, dilution=1, max_nm=False, mode='concentration')
 
             # plots = auswertung_1.plot_reihe(temp_dir)
