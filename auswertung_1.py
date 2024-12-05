@@ -456,18 +456,16 @@ def plot_reihe(reihe, slope, x_legend=0.8, y_legend=0.9, max_nm=False):
         color = thermal_colors[(i) % len(thermal_colors)]
         df = plot_allinone(fig, folder_path, slope, title=reihe, name=folder, color=color, max_nm=max_nm)
         plot_allinone(fig_umsatz, folder_path, slope,
-                      title='Umsatz',
+                      title='',
                       name=folder, color=color, max_nm=max_nm,
-                      mode='umsatz')
+                      mode='')
         integrale_methode(df, fig_int, color, name=folder)
 
     fig.update_layout(
         legend=dict(
             x=x_legend,
             y=y_legend, ))
-    fig.show()
-    fig_umsatz.show()
-    fig_int.show()
+    
     return fig, fig_umsatz, fig_int
 
 
