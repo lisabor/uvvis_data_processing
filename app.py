@@ -6,6 +6,8 @@ import auswertung_1
 import functions
 import os
 import tempfile
+import zipfile
+from io import BytesIO
 
 st.title("UV/Vis Data Processing")
 
@@ -49,27 +51,48 @@ else:
 
 # now you can continue with processing the other data
 if slope is not None:
-    uploaded_files = st.file_uploader("Upload CSV files (name_Zeit.csv)", accept_multiple_files=True, type=['csv'])
+    display_option = st.radio(
+    "How many experiments should be processed?",
+    options=["Only One Experiment", "A Row of Experiments"],
+    horizontal=True
+)
+    if display_option == "Only One Experiment":
+        uploaded_files = st.file_uploader("Upload CSV files (name_Zeit.csv)", accept_multiple_files=True, type=['csv'])
 
-    if uploaded_files:
-        # Save uploaded files to a temporary directory
-        with tempfile.TemporaryDirectory() as temp_dir:
-            for uploaded_file in uploaded_files:
-                file_path = os.path.join(temp_dir, uploaded_file.name)
-                with open(file_path, "wb") as f:
-                    f.write(uploaded_file.getbuffer())
+        if uploaded_files:
+            # Save uploaded files to a temporary directory
+            with tempfile.TemporaryDirectory() as temp_dir:
+                for uploaded_file in uploaded_files:
+                    file_path = os.path.join(temp_dir, uploaded_file.name)
+                    with open(file_path, "wb") as f:
+                        f.write(uploaded_file.getbuffer())
 
 
-            fig, data = auswertung_1.zeitverlauf(temp_dir, slope)
-            fig = functions.customize_plot(fig)
-            data = data.sort_values(by='time')
-            st.dataframe(data)
-            st.plotly_chart(fig, use_container_width=True, theme=None)
-            #auswertung_1.plot_allinone(fig, experiment, slope, title, times=[0], cut_off=500, name=None, color=None, dilution=1, max_nm=False, mode='concentration')
+                fig, data = auswertung_1.zeitverlauf(temp_dir, slope)
+                fig = functions.customize_plot(fig)
+                data = data.sort_values(by='time')
+                st.dataframe(data)
+                st.plotly_chart(fig, use_container_width=True, theme=None)
+        
+    elif display_option == "A Row of Experiments":
+        uploaded_experiments = st.file_uploader("Upload ZIP files for each experiment (each ZIP contains CSV files)",
+        accept_multiple_files=True,
+        type=['zip']
+        )
 
-            # plots = auswertung_1.plot_reihe(temp_dir)
-            # for plot in plots:
-            #     st.header(plot['title'])
-            #     st.plotly_chart(plot['fig'])
+        experiments_data = {}
+
+        if uploaded_experiments:
+            for zip_file in uploaded_experiments:
+                experiment_name = os.path.splitext(zip_file.name)[0]  # Use ZIP file name as experiment name
+                with tempfile.TemporaryDirectory() as temp_dir:
+                    with zipfile.ZipFile(BytesIO(zip_file.read())) as z:
+                        z.extractall(temp_dir)
+                
+                plots = auswertung_1.plot_reihe(temp_dir)
+
+                for plot in plots:
+                    st.header(plot['title'])
+                    st.plotly_chart(plot['fig'])
 
 # feature inspect the spectra data with plot_spectra show true

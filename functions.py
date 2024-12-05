@@ -96,15 +96,7 @@ def customize_plot(fig, x_max=None, y_max=None, x_min=None, y_min=None, round_li
         minor=y_minor
     )
 
-    # Implement log axes if requested
-    if log_axis:
-        xaxis_dict['type'] = 'log'
-        yaxis_dict['type'] = 'log'
-    elif x_min is None and y_min is None:
-        x_min = 0
-        y_min = 0
-
-    # set axis limits if
+    # set axis limits
     if x_max is not None:
         if round_lim:
             x_max = math.ceil(x_max / 10) * 10
