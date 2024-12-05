@@ -10,9 +10,9 @@ import zipfile
 from io import BytesIO
 
 st.title("UV/Vis Data Processing")
-
+st.header("Set Calibration")
 # select if you want default calibration data or own
-own_calibration = st.checkbox("Use Custom Calibration Data", value=True)
+own_calibration = st.checkbox("Use Custom Calibration Data", value=False)
 
 if own_calibration:
     uploaded_calibration = st.file_uploader("Upload Calibration data", accept_multiple_files=True, type=['csv'])
@@ -48,15 +48,15 @@ else:
     slope = auswertung_1.calibration('data/MB_Kalibrierung', conc, show=False)
     st.success("Using default calibration data for methylene blue")
 
-
+st.header("Plot the Experiments")
 # now you can continue with processing the other data
 if slope is not None:
     display_option = st.radio(
-    "How many experiments should be processed?",
-    options=["Only One Experiment", "A Row of Experiments"],
+    " ",
+    options=["One Experiment", "Row of Experiments"],
     horizontal=True
 )
-    if display_option == "Only One Experiment":
+    if display_option == "One Experiment":
         uploaded_files = st.file_uploader("Upload CSV files (name_Zeit.csv)", accept_multiple_files=True, type=['csv'])
 
         if uploaded_files:
@@ -73,7 +73,7 @@ if slope is not None:
                 st.dataframe(data)
                 st.plotly_chart(fig, use_container_width=True, theme=None)
         
-    elif display_option == "A Row of Experiments":
+    elif display_option == "Row of Experiments":
         uploaded_experiments = st.file_uploader("Upload ZIP files for each experiment (each ZIP contains CSV files)",
         accept_multiple_files=True,
         type=['zip']
@@ -94,3 +94,4 @@ if slope is not None:
                     st.plotly_chart(plot, theme=None)
 
 # feature inspect the spectra data with plot_spectra show true
+# feature: select x and y column to plot
