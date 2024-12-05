@@ -48,7 +48,7 @@ else:
 
 # now you can continue with processing the other data
 if slope is not None:
-    uploaded_files = st.file_uploader("Upload CSV files", accept_multiple_files=True, type=['csv'])
+    uploaded_files = st.file_uploader("Upload CSV files (name_Zeit.csv)", accept_multiple_files=True, type=['csv'])
 
     if uploaded_files:
         # Save uploaded files to a temporary directory

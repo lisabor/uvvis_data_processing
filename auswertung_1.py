@@ -164,7 +164,7 @@ def zeitverlauf(experiment, slope, times = [0,5,10,15,20,30,40,60], cut_off=500,
                             ),
                         ))
     fig.update_layout(
-        title=experiment,
+        title='',
         xaxis_title='t (min)',
         yaxis_title='c (mg/l)',
         font=dict(size=20),
