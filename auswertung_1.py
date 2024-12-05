@@ -454,7 +454,7 @@ def plot_reihe(reihe, slope, x_legend=0.8, y_legend=0.9, max_nm=False):
     for i, folder in enumerate(os.listdir(reihe)):
         folder_path = os.path.join(reihe, folder)
         color = thermal_colors[(i) % len(thermal_colors)]
-        df = plot_allinone(fig, folder_path, slope, title=reihe, name=folder, color=color, max_nm=max_nm)
+        df = plot_allinone(fig, folder_path, slope, title='', name=folder, color=color, max_nm=max_nm)
         plot_allinone(fig_umsatz, folder_path, slope,
                       title='',
                       name=folder, color=color, max_nm=max_nm,

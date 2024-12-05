@@ -115,9 +115,9 @@ def customize_plot(fig, x_max=None, y_max=None, x_min=0, y_min=0, round_lim=True
         # plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
         plot_bgcolor='rgba(255,255,255,1)',
         paper_bgcolor='rgba(0,0,0,0)',
-        legend=dict(
-            x=0.9,  # Position of the legend
-            y=0.9,
-        )
+        # legend=dict( # the legend should now be next to the plots!
+        #     x=0.9,  # Position of the legend
+        #     y=0.9,
+        # )
     )
     return fig
