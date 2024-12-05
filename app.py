@@ -91,6 +91,6 @@ if slope is not None:
                     plots = auswertung_1.plot_reihe(temp_dir, slope)
 
                 for plot in plots:
-                    st.plotly_chart(plot)
+                    st.plotly_chart(plot, theme=None)
 
 # feature inspect the spectra data with plot_spectra show true
