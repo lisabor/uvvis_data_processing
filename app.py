@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.io as pio
 import auswertung_1
+import functions
 import os
 import tempfile
 
@@ -60,6 +61,7 @@ if slope is not None:
 
 
             fig, data = auswertung_1.zeitverlauf(temp_dir, slope)
+            fig = functions.customize_plot(fig)
             data = data.sort_values(by='time')
             st.dataframe(data)
             st.plotly_chart(fig)
