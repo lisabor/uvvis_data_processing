@@ -88,7 +88,7 @@ if slope is not None:
                     with zipfile.ZipFile(BytesIO(zip_file.read())) as z:
                         z.extractall(temp_dir)
                 
-                plots = auswertung_1.plot_reihe(temp_dir, slope)
+                    plots = auswertung_1.plot_reihe(temp_dir, slope)
 
                 for plot in plots:
                     st.header(plot['title'])
