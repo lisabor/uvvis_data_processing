@@ -130,6 +130,13 @@ def calibration(folder_path, concentration, cut_off=500, show=False, max_nm=Fals
 
     return slope
 
+def add_time(df):
+    time_after_underscore = df['filename'].str.extract(r'_(\-?\d+)')[0]
+    time_before_min = df['filename'].str.extract(r'(\-?\d+)min')[0]
+    df['time'] = time_after_underscore.fillna(time_before_min).astype(float)
+
+    return df
+
 
 def zeitverlauf(experiment, slope, times = [0,5,10,15,20,30,40,60], cut_off=500, dilution=1, max_nm=False, font_size=20):
     df = plot_spectra(experiment, title=experiment, cut_off=cut_off, max_nm=max_nm)
@@ -147,9 +154,7 @@ def zeitverlauf(experiment, slope, times = [0,5,10,15,20,30,40,60], cut_off=500,
     df['concentration'] = df['concentration'] * dilution
 
     # df['time'] = df['filename'].str.extract(r'_(-?\d+)').astype(float)
-    time_after_underscore = df['filename'].str.extract(r'_(\-?\d+)')[0]
-    time_before_min = df['filename'].str.extract(r'(\-?\d+)min')[0]
-    df['time'] = time_after_underscore.fillna(time_before_min).astype(float)
+    df = add_time(df)
 
     df = umsatz(df)
 
@@ -212,7 +217,11 @@ def plot_allinone(fig, experiment, slope, title, times=[0], cut_off=500, name=No
         if match:
             dilution_factor = int(match.group(1))  # Extract the number after 'dil'
             df.loc[i, 'concentration'] *= dilution_factor
+
     df['concentration'] = df['concentration'] * dilution
+    # df['time'] = df['filename'].str.extract(r'_(-?\d+)').astype(float)  # the -? is for optional negative numbers
+    df = add_time(df)
+
     df = umsatz(df)
 
     if mode == 'concentration':
@@ -227,8 +236,6 @@ def plot_allinone(fig, experiment, slope, title, times=[0], cut_off=500, name=No
         ticks = 'umsatz'
         round_lim = False
         y_max = 1
-
-    df['time'] = df['filename'].str.extract(r'_(-?\d+)').astype(float)  # the -? is for optional negative numbers
 
     fig.add_trace(go.Scatter(x=df['time'],
                              y=df[y_column],
@@ -391,7 +398,8 @@ def kinetik():
 
 def integrale_methode(data, fig_int, color, name, x_max=30):
     df = data.copy()
-    df['time'] = df['filename'].str.extract(r'_(\d+)').astype(float)
+    # df['time'] = df['filename'].str.extract(r'_(\d+)').astype(float)
+    df = add_time(df)
 
     ln0 = np.log(df.loc[0, 'concentration'])
     df['lnc'] = ln0 - np.log(df['concentration'])
@@ -445,7 +453,6 @@ def plot_reihe(reihe, slope, x_legend=0.8, y_legend=0.9, max_nm=False):
 
     for i, folder in enumerate(os.listdir(reihe)):
         folder_path = os.path.join(reihe, folder)
-        print(folder)
         color = thermal_colors[(i) % len(thermal_colors)]
         df = plot_allinone(fig, folder_path, slope, title=reihe, name=folder, color=color, max_nm=max_nm)
         plot_allinone(fig_umsatz, folder_path, slope,
