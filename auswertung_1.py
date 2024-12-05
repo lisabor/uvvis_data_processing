@@ -458,7 +458,7 @@ def plot_reihe(reihe, slope, x_legend=0.8, y_legend=0.9, max_nm=False):
         plot_allinone(fig_umsatz, folder_path, slope,
                       title='',
                       name=folder, color=color, max_nm=max_nm,
-                      mode='')
+                      mode='umsatz')
         integrale_methode(df, fig_int, color, name=folder)
 
     fig.update_layout(
