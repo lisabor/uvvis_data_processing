@@ -12,7 +12,7 @@ from io import BytesIO
 st.title("UV/Vis Data Processing")
 st.header("Set Calibration")
 # select if you want default calibration data or own
-own_calibration = st.checkbox("Use Custom Calibration Data", value=False)
+own_calibration = st.checkbox("Use Custom Calibration Data", value=True)
 
 if own_calibration:
     uploaded_calibration = st.file_uploader("Upload Calibration data", accept_multiple_files=True, type=['csv'])
