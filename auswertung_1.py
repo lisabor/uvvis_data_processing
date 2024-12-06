@@ -84,9 +84,10 @@ def plot_spectra(folder_path, title='UV-Vis Methylenblue', cut_off=500, show=Tru
                 'filename': filename,
                 'absorption': max_a - min_a,
             })
-            name = filename.split('.')[0]
-            name = name.split('_')[1] if '_' in name else name.split('-')[1]
-            fig.add_trace(go.Scatter(x=data.index, y=data['A'], mode='lines', name=f'{name} min'))
+            if show:
+                name = filename.split('.')[0]
+                name = name.split('_')[1] if '_' in name else name.split('-')[1]
+                fig.add_trace(go.Scatter(x=data.index, y=data['A'], mode='lines', name=f'{name} min'))
 
     fig.add_vline(
         x=lambda_nm,
