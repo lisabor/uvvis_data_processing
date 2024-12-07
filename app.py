@@ -56,6 +56,10 @@ if slope is not None:
     options=["One Experiment", "Row of Experiments"],
     horizontal=True
 )
+    lambda_input = st.text_input(
+        "Choose Wavelength at maximum adsorption in nm (for MB 664)",
+        value="664" # todo!
+    )
     if display_option == "One Experiment":
         uploaded_files = st.file_uploader("Upload CSV files (name_Zeit.csv)", accept_multiple_files=True, type=['csv'])
 
